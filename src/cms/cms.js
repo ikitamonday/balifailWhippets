@@ -1,16 +1,20 @@
 import CMS from 'netlify-cms-app'
 import uploadcare from 'netlify-cms-media-library-uploadcare'
-import cloudinary from 'netlify-cms-media-library-cloudinary'
 
 import AboutPagePreview from './preview-templates/AboutPagePreview'
 import BlogPostPreview from './preview-templates/BlogPostPreview'
 import ProductPagePreview from './preview-templates/ProductPagePreview'
-import IndexPagePreview from './preview-templates/IndexPagePreview'
+import HomePagePreview from './preview-templates/HomePagePreview'
 
 CMS.registerMediaLibrary(uploadcare)
-CMS.registerMediaLibrary(cloudinary)
 
-CMS.registerPreviewTemplate('index', IndexPagePreview)
+if (window.location.hostname === 'localhost' && window.localStorage.getItem('netlifySiteURL')) {
+  CMS.registerPreviewStyle(window.localStorage.getItem('netlifySiteURL') + '/styles.css')
+} else {
+  CMS.registerPreviewStyle('/styles.css')
+}
+
+CMS.registerPreviewTemplate('homePage', HomePagePreview)
 CMS.registerPreviewTemplate('about', AboutPagePreview)
 CMS.registerPreviewTemplate('products', ProductPagePreview)
 CMS.registerPreviewTemplate('blog', BlogPostPreview)
